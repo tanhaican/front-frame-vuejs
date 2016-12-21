@@ -1,0 +1,70 @@
+<div class="outter-wrap bg-white">
+    <div class="groupon-item bg-ebebeb detail-groupon-item">
+        <div class="title">{{groupon.goodName}}</div>
+        <div class="intro">{{groupon.goodDesc}}</div>
+        <div class="price">
+            <span class="order-price">{{groupon.groupMoney}}</span>
+            <span class="original-price">{{groupon.actualMoney}}</span>
+            <span class="discount">优惠{{groupon.actualMoney - groupon.groupMoney}}元</span>
+        </div>
+    </div>
+
+    <div class="row depart-info">
+        <div class="col">{{groupon.orgName}}</div>
+        <a class="col view-other-groupon"
+             v-link="{name: 'orgGrouponList', params:{orgId: groupon.orgId } }">
+            查看学校的其他团购<i class="iconfont icon-right"></i>
+        </a>
+    </div>
+    <div class="location"><i class="iconfont icon-location"></i>{{groupon.orgAddress}}</div>
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-inline phone" v-on:click="call(groupon.teacherPhone)"><i class="iconfont icon-phone"></i>电话</button>
+        </div>
+        <div class="col">
+            <button class="btn btn-inline address" v-on:click="viewMap()"><i class="iconfont icon-location"></i>地址</button>
+        </div>
+    </div>
+
+    <div class="detail-pictures">
+        图文详情：
+        <img class="img" :src="groupon.goodPic">
+    </div>
+
+</div>
+
+<div class="bottom">
+    <span class="order-price">{{groupon.groupMoney}}</span>
+    <span class="original-price">{{groupon.actualMoney}}</span>
+    <button class="btn btn-yellow btn-inline share" v-on:click="bookGroupon()">立即预约</button>
+</div>
+
+<div class="modal" v-show="ctrl.showBindPhoneBox">
+    <div class="back-shade"></div>
+    <div class="modal-content bind-phone">
+        <div class="input-bind-phone">
+            <div class="margin-1 text-center">绑定手机号码</div>
+            <div class="row">
+                <input type="text" class="text col2" v-model="ctrl.mobilephone" placeholder="手机号码">
+                <button class="btn btn-yellow col1" v-on:click="sendValidCode()" v-bind:disabled="ctrl.countDown > 0">
+                    <span v-if="ctrl.countDown == 0">重新发送</span>
+                    <span v-else>发送验证码</span>
+                </button>
+            </div>
+
+            <div class="row">
+                <input type="text" class="text col2" v-model="ctrl.validCode" placeholder="验证码" >
+                <div class="col1 count-down">
+                    <i class="iconfont icon-shijian"></i>
+                    <span v-show="ctrl.countDown > 0">{{ctrl.countDown}}</span>
+                </div>
+            </div>
+            <div class="tips">预约成功后，姓名和手机号用来验证预约信息</div>
+
+            <div class="btn-group">
+                <button class="btn btn-inline" v-on:click="ctrl.showBindPhoneBox = false;">取消</button>
+                <button class="btn btn-inline btn-yellow" v-on:click="bindPhone()">绑定</button>
+            </div>
+        </div>
+    </div>
+</div>

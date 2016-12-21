@@ -1,0 +1,20 @@
+<div class="outter-wrap-full bg-ebebeb">
+    <div class="verify-by-WX bg-white middle-center" v-on:click="verifyByWx()">
+        <i class="iconfont icon-scan"></i> 微信扫一扫验证
+    </div>
+
+    <div class="verify-by-input bg-white">
+        <label>字符串验证</label>
+        <input type="text" class="text" id="verifyCode" v-model="ctrl.inputPwd" placeholder="预约密码串">
+        <button class="btn btn-inline btn-yellow" id="verifyBtn" v-on:click="verifyByCode()">验证</button>
+    </div>
+
+    <div class="verifing-list">
+        <div class="verifid-count bg-white" v-for="myVeifyGroupon in myVeifyGrouponList"
+                v-on:click="toVeirifiedList(myVeifyGroupon.uuid, myVeifyGroupon.checkedCount )">
+            {{myVeifyGroupon.goodName}} <div>已验证 <span>{{myVeifyGroupon.checkedCount }}</span></div>
+        </div>
+    </div>
+
+
+</div>

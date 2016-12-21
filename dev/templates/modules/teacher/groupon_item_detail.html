@@ -1,0 +1,50 @@
+<div class="outter-wrap-full margin-1 bg-white" v-on:click="ctrl.showShareBtn = false;">
+    <div class="groupon-item bg-ebebeb detail-groupon-item">
+        <div class="title">{{groupon.goodName}}</div>
+        <div class="intro">{{groupon.goodDesc}}</div>
+        <div class="price">
+            <span class="order-price">{{groupon.groupMoney}}</span>
+            <span class="original-price">{{groupon.actualMoney}}</span>
+            <span class="discount">优惠{{groupon.actualMoney - groupon.groupMoney}}元</span>
+        </div>
+    </div>
+
+    <div class="row depart-info">
+        <div class="col">{{groupon.orgName}}</div>
+        <a class="col view-other-groupon"
+           v-link="{name: 'teacherGrouponList', params:{openId: ctrl.openId } }">
+            查看我的其他团购<i class="iconfont icon-right"></i>
+        </a>
+    </div>
+    <div class="location"><i class="iconfont icon-location"></i>{{groupon.orgAddress}}</div>
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-inline phone" v-on:click="call(groupon.teacherPhone)"><i class="iconfont icon-phone"></i>电话</button>
+        </div>
+        <div class="col">
+            <button class="btn btn-inline address" v-on:click="viewMap()"><i class="iconfont icon-location"></i>地址</button>
+        </div>
+    </div>
+
+    <div class="detail-pictures">
+        图文详情：
+        <img class="img" :src="groupon.goodPic" onerror="this.src = 'dev/images/detail.png'">
+    </div>
+
+</div>
+
+<div class="share-group" v-bind:class="ctrl.showShareBtn ? 'to-show': '' ">
+    <div class="share-btn share-QZone" v-on:click="shareToQzone()"></div>
+    <div class="share-btn share-QQ" v-on:click="shareToQQ()"></div>
+    <div class="share-btn share-appmsg" v-on:click="shareToWeixin()"></div>
+    <div class="share-btn share-timeline" v-on:click="shareToTimeline()"></div>
+</div>
+
+<div class="bottom">
+    <div>
+        <span class="order-price">{{groupon.groupMoney}}</span>
+        <span class="original-price">{{groupon.actualMoney}}</span>
+        <button class="btn btn-yellow btn-inline share" v-on:click="shareIt()">立即分享</button>
+    </div>
+
+</div>

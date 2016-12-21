@@ -1,0 +1,37 @@
+<div class="outter-wrap-full bg-ebebeb book-success-wrap">
+    <div class="bg-white margin-1">
+        <div class="book-success"><i class="iconfont icon-roundcheck"></i>预约成功！</div>
+
+        <div class="book-success-tips text-center">
+            预约密码串：{{groupon.password }}
+        </div>
+        <div class="book-success-tips">
+            密码串短信已经发送到您到手机中，凭借密码串可到 <b>{{groupon.orgName }}</b> 进行现场缴费。
+            也可在服务号菜单中点击“验证”，来查看您的“密码串”和二维码，进行二维码验证。
+        </div>
+
+        <div class="location margin-l-r-2"><i class="iconfont icon-location"></i>{{groupon.orgAddress }}</div>
+
+        <div class="row margin-t-l-r-2">
+            <div class="col">
+                <button class="btn btn-inline phone" v-on:click="call(groupon.teacherPhone)"><i class="iconfont icon-phone"></i>电话</button>
+            </div>
+            <div class="col">
+                <button class="btn btn-inline address"><i class="iconfont icon-location"></i>地址</button>
+            </div>
+        </div>
+
+        <div class="depart-info padding-b-1">
+            <div class="view-other-groupon margin-l-r-2">查看学校的其他团购 <i class="iconfont icon-right"></i></div>
+        </div>
+
+    </div>
+
+    <div class="bg-white margin-1 padding-2 text-center">
+        <img class="qrcode" src="dev/images/qrcode.png">
+        <div class="qrcode-tip">
+            长按图片关注服务号
+        </div>
+    </div>
+
+</div>

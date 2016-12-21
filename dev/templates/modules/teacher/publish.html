@@ -1,0 +1,35 @@
+<div class="outter-wrap-full margin-1">
+    <div class="ln-hght-2">当前用户：<span>{{userInfo.nickname}}</span></div>
+
+    <div class="input-group">
+        <label for="goodName">请输入此次团购的项目名称：</label>
+        <input type="text" class="text" v-model="groupon.goodName" id="goodName" required>
+        <div class="input-addon"><span class="color-red">*</span> 老师可根据自身情况设置项目名称 如：1对1语文14天教学 </div>
+    </div>
+
+    <div class="input-group">
+        <label for="actualMoney">优惠前价格：</label>
+        <input type="number" class="text" step="0.01" v-model="groupon.actualMoney" id="actualMoney" required>
+    </div>
+
+    <div class="input-group">
+        <label for="groupMoney">团购价格：</label>
+        <input type="number" class="text" step="0.01" v-model="groupon.groupMoney" id="groupMoney" required>
+    </div>
+
+    <div class="input-group">
+        <label for="limitNum">限定人数：</label>
+        <input type="number" class="text" v-model="groupon.limitNum" id="limitNum">
+        <div class="input-addon">
+            <span class="color-red">*</span> 设置能参与本次团购项目的最多人数。("0"代表不限制参与人数)
+        </div>
+    </div>
+
+    <div class="input-group">
+        <label for="goodDesc">内容简介：</label>
+        <textarea v-model="groupon.goodDesc" rows="5" id="goodDesc" required></textarea>
+    </div>
+
+    <button class="btn btn-yellow" id="publish" v-on:click="publishGroupon">发布团购</button>
+
+</div>

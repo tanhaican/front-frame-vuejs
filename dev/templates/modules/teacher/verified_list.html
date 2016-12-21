@@ -1,0 +1,19 @@
+<div class="outter-wrap-full bg-ebebeb">
+    <div class="verifid-list-count bg-white">人数： <span>{{count }}</span></div>
+
+    <div class="list-wrap">
+        <div class="verifid-student bg-white" v-for="verified in verifiedList">
+            <div>
+                <span>{{verified.pName }}</span>
+                <span class="right">
+                    <a href="tel:{{verified.pPhone }}"><i class="iconfont icon-phone"></i>{{verified.pPhone }}</a>
+                </span>
+            </div>
+            <div class="second-row">
+                <span>{{verified.goodName }}</span><span class="right">{{verified.checkTime }}</span>
+            </div>
+        </div>
+
+    </div>
+
+</div>
