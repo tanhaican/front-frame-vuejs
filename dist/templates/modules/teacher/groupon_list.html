@@ -1,0 +1,16 @@
+<div class="outter-wrap-full bg-ebebeb" id="grouponList">
+    <div class="groupon-item bg-white" v-for="groupon in grouponList"
+         v-on:click="toGrouponDetail(groupon.uuid)">
+        <div class="title">{{groupon.goodName}}</div>
+        <div class="intro">{{groupon.goodDesc}}</div>
+        <div class="price">
+            <span class="order-price">{{groupon.groupMoney}}</span>
+            <span class="original-price">{{groupon.actualMoney}}</span>
+        </div>
+        <div class="statistics">
+            <span><i class="iconfont icon-share"></i> 转发：{{groupon.transmitCount}}</span>
+            <span><i class="iconfont icon-assessedbadge"></i> 核定：{{groupon.checkedCount}}</span>
+            <span><i class="iconfont icon-dingdan"></i> 预定：{{groupon.attentCount}}</span>
+        </div>
+    </div>
+</div>

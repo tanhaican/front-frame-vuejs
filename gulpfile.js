@@ -19,12 +19,12 @@ var order = require("gulp-order");
 
 
 //删除static目录
-gulp.task("day_edu_clear",function(){
+gulp.task("all_clear",function(){
     return del(['dist']);
 });
 
 // 检查脚本
-gulp.task('day_edu_lint', function() {
+gulp.task('js_lint', function() {
     return gulp.src('dev/js/*.js')
         .pipe(jshint())
         .pipe(jshint.reporter('default'));
@@ -32,7 +32,7 @@ gulp.task('day_edu_lint', function() {
 
 
 //复制一份完整的未处理的
-gulp.task('day_edu_copyfull', ['day_edu_clear', 'day_edu_lint'], function() {
+gulp.task('full_copy', ['all_clear', 'js_lint'], function() {
     return gulp.src(['dev/**/*.*', '!dev/css/*.css', '!dev/js/lib/*.js'])
         .pipe(gulp.dest('dist')); 
 });
@@ -40,7 +40,7 @@ gulp.task('day_edu_copyfull', ['day_edu_clear', 'day_edu_lint'], function() {
 
 
 // 合并，压缩文件
-gulp.task('day_edu_csses', ['day_edu_copyfull'], function () {
+gulp.task('min_csses', ['full_copy'], function () {
     return gulp.src(['dev/{css,js}/*.css','!dev/{css,js}/*.min.css']) // 要压缩的css文件
         .pipe(cssver({useDate:true, format:"yyyyMMddhhmmssS"})) //给css文件里引用文件加版本号（文件MD5）
         .pipe(minCss({
@@ -53,21 +53,19 @@ gulp.task('day_edu_csses', ['day_edu_copyfull'], function () {
 });
 
 
-gulp.task('day_edu_script_lib', ['day_edu_copyfull'], function() {
-    var stream = gulp.src(['dev/js/lib/*.min.js', 'dev/js/lib/*-min.js'])
+gulp.task('combine_js_lib', ['full_copy'], function() {
+    return gulp.src(['dev/js/lib/*.min.js', 'dev/js/lib/*-min.js'])
         .pipe(order([
             'dev/js/lib/sea.min.js', 'dev/js/lib/seajs*.min.js',
             'dev/js/lib/vue.min.js', 'dev/js/lib/vue-resource.min.js', 'dev/js/lib/vue-router.min.js'
         ], {base: './'}))
         .pipe(concat('all.lib.min.js'))
         .pipe(gulp.dest('dist/js/lib'));
-
-    return stream;
 });
 
 
 //压缩js
-gulp.task('day_edu_script', ['day_edu_script_lib'], function () {
+gulp.task('min_js', ['combine_js_lib'], function () {
     return gulp.src(['dist/js/*.js', 'dist/js/**/*.js', '!dist/js/lib/*.js'])
         .pipe(minJs({
             mangle: false,//类型：Boolean 默认：true 是否修改变量名
@@ -79,7 +77,7 @@ gulp.task('day_edu_script', ['day_edu_script_lib'], function () {
 
 
 //文件内容 版本号
-gulp.task("day_edu_replace", function () {
+gulp.task("version_replace", function () {
     var oDate = new Date();
     var sDate = oDate.getFullYear() +""+ (oDate.getMonth() +1) +""+ oDate.getDate() +""+ oDate.getHours() +""+ oDate.getMinutes() +""+ oDate.getSeconds() +""+ oDate.getMilliseconds();
     return gulp.src('index_tmp.html')
@@ -90,4 +88,4 @@ gulp.task("day_edu_replace", function () {
 
 
 // 默认任务
-gulp.task('default', ['day_edu_csses',  'day_edu_script', 'day_edu_replace']);
+gulp.task('default', ['min_csses',  'min_js', 'version_replace']);

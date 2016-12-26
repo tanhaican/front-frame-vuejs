@@ -1,0 +1,1 @@
+define(function(require,exports,module){var Constants={};Constants.APP_SERVER_URL="http://edu.idaycrm.com/onlive/",Constants.PAGE_INFO={PAGE_SIZE:10},Constants.GROUPON_STATUS={AUDDITING:"1",PASSED:"2",REJECTED:"",CLOSED:"3"},Constants.MSG_COUNT_DOWN=120,module.exports=Constants});

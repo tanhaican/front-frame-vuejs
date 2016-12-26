@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <title>day教育APP</title>
+    <link rel="stylesheet" href="dev/css/iconfont/iconfont.css" type="text/css">
+    <link rel="stylesheet" href="dist/css/all.css" type="text/css">
+</head>
+<body>
+
+<div id="app">
+    <!-- 路由外链 -->
+    <router-view></router-view>
+</div>
+
+<script src="./dist/js/lib/jweixin-1.0.0.js"></script>
+<script src="./dist/js/lib/all.lib.min.js"></script>
+<script>
+    var gMain = {
+        verson: "1.0"
+        , basePath: "./dist"
+    };
+
+    /**
+     * seajs配置信息
+     */
+    seajs.config({
+        base: gMain.basePath  //seajs的基础路径（组织人事，元数据项目的模块 ）
+        , charset: 'utf-8'
+        , map: [[/^(.*\.(?:css|js|html))(.*)$/i, '$1?v=20161226134459607' + '-' + gMain.verson]]  //加上版本号，清缓存用
+        //公共路径
+        , paths: {}
+    });
+
+    seajs.use(["js/app.js"]);
+</script>
+</body>
+</html>

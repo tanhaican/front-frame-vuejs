@@ -1,0 +1,12 @@
+<div class="outter-wrap-full bg-ebebeb book-success-wrap">
+    <div class="bg-white margin-1 padding-t-b-1 text-center" v-for="grouponPwd in grouponPwdList">
+        <div class="school">学校名称：{{grouponPwd.orgName }}</div>
+        <div class="course  padding-b-1">课程名称：1对1语文4周课程</div>
+        <div class="my-verify-code">密码串：{{grouponPwd.password }}</div>
+        <div class="qrcode" id="{{'qrcode' + grouponPwd.groupId }}" ></div>
+        <div class="qrcode-tip">
+            二维码验证
+        </div>
+    </div>
+
+</div>
