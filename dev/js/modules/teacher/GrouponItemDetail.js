@@ -66,7 +66,7 @@ define(function (require, exports, module) {
                     title: buildShareTitle(groupon), // 分享标题
                     desc: '名师授课，欢迎报名参加', // 分享描述
                     link: getShareUrl(), // 分享链接
-                    imgUrl: './images/day_edu_marker.png', // 分享图标
+                    imgUrl: './images/logo.png', // 分享图标
                     success: function () {
                         // 用户确认分享后执行的回调函数
                         GrouponService.shareIt(ctrl.uuid);
@@ -87,7 +87,7 @@ define(function (require, exports, module) {
                     title: buildShareTitle(groupon), // 分享标题
                     desc: '名师授课，欢迎报名参加', // 分享描述
                     link: getShareUrl(), // 分享链接
-                    imgUrl: './images/day_edu_marker.png', // 分享图标
+                    imgUrl: './images/logo.png', // 分享图标
                     success: function () {
                         // 用户确认分享后执行的回调函数
                         GrouponService.shareIt(ctrl.uuid);
@@ -108,7 +108,7 @@ define(function (require, exports, module) {
                     title: buildShareTitle(groupon), // 分享标题
                     desc: '名师授课，欢迎报名参加', // 分享描述
                     link: getShareUrl, // 分享链接
-                    imgUrl: './images/day_edu_marker.png', // 分享图标
+                    imgUrl: './images/logo.png', // 分享图标
                     success: function () {
                         // 用户确认分享后执行的回调函数
                         GrouponService.shareIt(ctrl.uuid);
@@ -128,7 +128,7 @@ define(function (require, exports, module) {
                 wx.onMenuShareTimeline({
                     title: buildShareTitle(groupon), // 分享标题
                     link: getShareUrl(), // 分享链接
-                    imgUrl: './images/day_edu_marker.png', // 分享图标
+                    imgUrl: './images/logo.png', // 分享图标
                     success: function () {
                         // 用户确认分享后执行的回调函数
                         GrouponService.shareIt(ctrl.uuid);

@@ -36,8 +36,8 @@ define(function (require, exports, module) {
 		}
 		clientType.isMicroMessager = isWeixin;
 		clientType.isPC = !(isAndroid || isIOS || isWeixin);
-		return clientType
-	}
+		return clientType;
+	};
 
 	/**
 	 * 使用POST方式请求数据（注意，content type：application/x-www-form-urlencoded）
@@ -45,8 +45,7 @@ define(function (require, exports, module) {
 	 * @param param
 	 */
 	Utils.post = function(url, param) {
-		var promise = Vue.http.post(url, param, {emulateJSON: true});
-		return promise;
+		return Vue.http.post(url, param, {emulateJSON: true});
 	};
 
 	/**
@@ -55,7 +54,50 @@ define(function (require, exports, module) {
 	 * @param concatArr
 	 */
 	Utils.concatArr = function(arr, concatArr) {
-		arr && _.isArray(arr) && arr.push.apply(arr, concatArr);
+		Array.isArray(arr) && Array.isArray(concatArr) && arr.push.apply(arr, concatArr);
+	};
+
+	Utils.isJsonStr = function(str) {
+		var regxObj = /^{.*}$/,
+			regxArr = /^\[.*\]$/,
+			isJsonStr = false;
+		if('string' === typeof str) {
+			if(regxObj.test(str) || regxArr.test(str)) {
+				try {
+					JSON.parse(str);
+					isJsonStr = true;
+				} catch(e) {
+				}
+			}
+		}
+		return isJsonStr;
+	};
+
+	/**
+	 * 判断是否 ISO date strings
+	 * @param str
+	 * @returns {boolean|*}
+	 */
+	Utils.isDateJsonStr = function(str) {
+		var dateRegx = /^\"(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z\"$/;
+		return 'string' === typeof str && dateRegx.test(str);
+	};
+
+	/**
+	 * 解析ISO date strings并返回对应的Date值
+	 * @param str
+	 * @returns {Date}
+	 */
+	Utils.getDate = function(str) {
+		var dateRegx = /^\"(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z\"$/,
+			a;
+		if (typeof str === 'string') {
+			a = dateRegx.exec(str);
+			if (a) {
+				return new Date(Date.UTC(+a[1], +a[2] - 1, +a[3], +a[4],
+					+a[5], +a[6]));
+			}
+		}
 	};
 
 	Utils.Session = sessionStorage && {
@@ -66,6 +108,9 @@ define(function (require, exports, module) {
 			if(!key) {
 				throw 'key 不能为空';
 			}
+			if('function' === typeof value) {
+				throw '无法保存function';
+			}
 			if('object' === typeof value) {
 				value = JSON.stringify(value);
 			}
@@ -73,8 +118,12 @@ define(function (require, exports, module) {
 		},
 		get: function(key) {
 			var value = sessionStorage.getItem(key);
-			if(value && /^{.*}$/.test(value)) {
-				value = JSON.parse(value);
+			if(value) {
+				if(Utils.isDateJsonStr(value)) {
+					value = Utils.getDate(value);
+				} else if(Utils.isJsonStr(value)) {
+					value = JSON.parse(value);
+				}
 			}
 			return value;
 		},
@@ -89,40 +138,47 @@ define(function (require, exports, module) {
 			}
 		}
 	} || {
-			put: function(key, value) {
-				if(arguments.length < 2) {
-					throw '请输入两个参数';
-				}
-				if(!key) {
-					throw 'key 不能为空';
-				}
-				var data = window._session_data_ = (window._session_data_ || {}) ;
+		put: function(key, value) {
+			if(arguments.length < 2) {
+				throw '请输入两个参数';
+			}
+			if(!key) {
+				throw 'key 不能为空';
+			}
+			if('function' === typeof value) {
+				throw '无法保存function';
+			}
+			var data = window._session_data_ = (window._session_data_ || {}) ;
 
-				if('object' === typeof value) {
-					value = JSON.stringify(value);
-				}
-				data || (data = {});
-				data[key] = value;
-			},
-			get: function(key) {
-				var data = window._session_data_,
-					value = data && data[key];
+			if('object' === typeof value) {
+				value = JSON.stringify(value);
+			}
+			data || (data = {});
+			data[key] = value;
+		},
+		get: function(key) {
+			var data = window._session_data_,
+				value = data && data[key];
 
-				if(value && /^{.*}$/.test(value)) {
+			if(value) {
+				if(Utils.isDateJsonStr(value)) {
+					value = Utils.getDate(value);
+				} else if(Utils.isJsonStr(value)) {
 					value = JSON.parse(value);
 				}
-				return value;
-			},
-			delete: function(key) {
-				var data = window._session_data_;
-
-				data[key] = null;
-				delete data[key];
-			},
-			clear: function() {
-				window._session_data_ = null;
 			}
-		};
+			return value;
+		},
+		delete: function(key) {
+			var data = window._session_data_;
+
+			data[key] = null;
+			delete data[key];
+		},
+		clear: function() {
+			window._session_data_ = null;
+		}
+	};
 
 
 	module.exports = Utils;

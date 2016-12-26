@@ -24,9 +24,9 @@ define(function (require, exports, module) {
         },
         route: {
             data: function(transition) {
-                lng = transition.to.params.lng
-                lat = transition.to.params.lat
-                orgName = transition.to.params.orgName
+                lng = transition.to.params.lng;
+                lat = transition.to.params.lat;
+                orgName = transition.to.params.orgName;
             }
         },
         methods: {
@@ -49,7 +49,7 @@ define(function (require, exports, module) {
                 position: map.getCenter(),
                 icon: new AMap.Icon({
                     size: new AMap.Size(70, 60),  //图标大小
-                    image: "./images/day_edu_marker.png",
+                    image: "./images/map_mark.png",
                     imageOffset: new AMap.Pixel(0, 0),
                     imageSize: new AMap.Size(49, 42)
                 })
